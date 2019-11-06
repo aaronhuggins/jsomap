@@ -17,7 +17,7 @@ console.log(new JSOMap({ text: 'Hello, world!' }, { print: '[text]' }))
 ## Selectors
 Data from the input object can be referred to in macros and properties using square-bracket syntax. For example, if the input has a property `text`, it can be selected in a template like:
 ```json
-{ print: "[text]" }
+{ "print": "[text]" }
 ```
 
 ## Macros
@@ -32,12 +32,12 @@ Function `JSOMap.addMacro()` can be used to directly add more macros at runtime.
 ### Using
 Macros are referred to by enclosing in curly braces:
 ```json
-{ print: "{Date()}" }
+{ "print": "{Date()}" }
 ```
 
 ### Piping
 Selectors and macros may have their output piped to other macros; this is called a 'pipe macro':
 ```json
-{ print: "{[text] | Split(/ (.+))}" }
+{ "print": "{[text] | Split(/ (.+))}" }
 ```
 Pipe macros must have each selector or macro separated by a space, a pipe, and another space. This is enforced for readability; piped macros not coforming to this standard will break.

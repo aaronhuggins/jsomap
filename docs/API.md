@@ -39,7 +39,7 @@
 
 **Example**  
 ```js
-Template:{ print: "{This is plain text | Split(/ /)}" }Expected:{ print: ['This', 'is', 'plain', 'text'] }
+Template:{ "print": "{This is plain text | Split(/ /)}" }Expected:{ print: ['This', 'is', 'plain', 'text'] }
 ```
 <a name="Macro.String_new"></a>
 
@@ -55,7 +55,7 @@ Template:{ print: "{This is plain text | Split(/ /)}" }Expected:{ print: ['Th
 
 **Example**  
 ```js
-Input:{ item: 12 }Template:{ print: "{[item] | String()}" }Expected:{ print: '12' }
+Input:{ item: 12 }Template:{ "print": "{[item] | String()}" }Expected:{ print: '12' }
 ```
 <a name="Macro.Number_new"></a>
 
@@ -71,7 +71,7 @@ Input:{ item: 12 }Template:{ print: "{[item] | String()}" }Expected:{ print
 
 **Example**  
 ```js
-Input:{ item: '10' }Template:{ print: "{[item] | Number()}" }Expected:{ print: 10 }
+Input:{ item: '10' }Template:{ "print": "{[item] | Number()}" }Expected:{ print: 10 }
 ```
 <a name="Macro.Boolean_new"></a>
 
@@ -87,7 +87,7 @@ Input:{ item: '10' }Template:{ print: "{[item] | Number()}" }Expected:{ pri
 
 **Example**  
 ```js
-Template:{ print: "{false | Boolean()}" }Expected:{ print: false }
+Template:{ "print": "{false | Boolean()}" }Expected:{ print: false }
 ```
 <a name="Macro.First_new"></a>
 
@@ -103,7 +103,7 @@ Template:{ print: "{false | Boolean()}" }Expected:{ print: false }
 
 **Example**  
 ```js
-Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ print: "{[item] | First()}" }Expected:{ print: 'This' }
+Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ "print": "{[item] | First()}" }Expected:{ print: 'This' }
 ```
 <a name="Macro.Last_new"></a>
 
@@ -119,7 +119,7 @@ Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ print: "{[item] | F
 
 **Example**  
 ```js
-Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ print: "{[item] | Last()}" }Expected:{ print: 'text' }
+Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ "print": "{[item] | Last()}" }Expected:{ print: 'text' }
 ```
 <a name="Macro.Date_new"></a>
 
@@ -130,7 +130,7 @@ Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ print: "{[item] | L
 **Returns**: <code>Date</code> - <p>The current date as javascript Date instance.</p>  
 **Example**  
 ```js
-Template:{ print: "{Date()}" }Expected:{ print: new Date() }
+Template:{ "print": "{Date()}" }Expected:{ print: new Date() }
 ```
 <a name="Macro.DateString_new"></a>
 
@@ -141,7 +141,7 @@ Template:{ print: "{Date()}" }Expected:{ print: new Date() }
 **Returns**: <code>string</code> - <p>ISO formatted date in UTC.</p>  
 **Example**  
 ```js
-Template:{ print: "{DateString()}" }Expected:{ print: '2018-01-06T22:22:22.022Z' }
+Template:{ "print": "{DateString()}" }Expected:{ print: '2018-01-06T22:22:22.022Z' }
 ```
 <a name="JSOMacro"></a>
 

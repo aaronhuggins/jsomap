@@ -12,7 +12,7 @@ class Macro {
    * @returns {string[]} Array of strings.
    * @example
    * Template:
-   * { print: "{This is plain text | Split(/ /)}" }
+   * { "print": "{This is plain text | Split(/ /)}" }
    * Expected:
    * { print: ['This', 'is', 'plain', 'text'] }
    */
@@ -31,7 +31,7 @@ class Macro {
    * Input:
    * { item: 12 }
    * Template:
-   * { print: "{[item] | String()}" }
+   * { "print": "{[item] | String()}" }
    * Expected:
    * { print: '12' }
    */
@@ -49,7 +49,7 @@ class Macro {
    * Input:
    * { item: '10' }
    * Template:
-   * { print: "{[item] | Number()}" }
+   * { "print": "{[item] | Number()}" }
    * Expected:
    * { print: 10 }
    */
@@ -65,7 +65,7 @@ class Macro {
    * @returns {boolean} The input as type 'boolean'.
    * @example
    * Template:
-   * { print: "{false | Boolean()}" }
+   * { "print": "{false | Boolean()}" }
    * Expected:
    * { print: false }
    */
@@ -89,7 +89,7 @@ class Macro {
    * Input:
    * { item: ['This', 'is', 'plain', 'text'] }
    * Template:
-   * { print: "{[item] | First()}" }
+   * { "print": "{[item] | First()}" }
    * Expected:
    * { print: 'This' }
    */
@@ -107,7 +107,7 @@ class Macro {
    * Input:
    * { item: ['This', 'is', 'plain', 'text'] }
    * Template:
-   * { print: "{[item] | Last()}" }
+   * { "print": "{[item] | Last()}" }
    * Expected:
    * { print: 'text' }
    */
@@ -124,7 +124,7 @@ class Macro {
    * @returns {Date} The current date as javascript Date instance.
    * @example
    * Template:
-   * { print: "{Date()}" }
+   * { "print": "{Date()}" }
    * Expected:
    * { print: new Date() }
    */
@@ -139,7 +139,7 @@ class Macro {
    * @returns {string} ISO formatted date in UTC.
    * @example
    * Template:
-   * { print: "{DateString()}" }
+   * { "print": "{DateString()}" }
    * Expected:
    * { print: '2018-01-06T22:22:22.022Z' }
    */
