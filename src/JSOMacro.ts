@@ -1,6 +1,9 @@
 /* eslint "@typescript-eslint/no-extraneous-class": ["error", { "allowStaticOnly": true }] */
 
-export class JSOMacro {
+/**
+ * @class
+ */
+class Macro {
   /**
    * @static
    * @description Macro method Split().
@@ -15,6 +18,7 @@ export class JSOMacro {
 
   /**
    * @static
+   * @type {Macro}
    * @description Macro method String().
    * @param {any} input - A value to convert to type 'string'.
    * @returns {string} The input as type 'string'.
@@ -25,6 +29,7 @@ export class JSOMacro {
 
   /**
    * @static
+   * @type {Macro}
    * @description Macro method Number().
    * @param {any} input - A value to convert to type 'number'.
    * @returns {number} The input as type 'number'.
@@ -35,6 +40,7 @@ export class JSOMacro {
 
   /**
    * @static
+   * @type {Macro}
    * @description Macro method Boolean().
    * @param {any} input - A value to convert to type 'boolean'.
    * @returns {boolean} The input as type 'boolean'.
@@ -51,6 +57,7 @@ export class JSOMacro {
 
   /**
    * @static
+   * @type {Macro}
    * @description Macro method First().
    * @param {string[]} input - Array of strings.
    * @returns {string} First string in array.
@@ -61,6 +68,7 @@ export class JSOMacro {
 
   /**
    * @static
+   * @type {Macro}
    * @description Macro method Last().
    * @param {string[]} input - Array of strings.
    * @returns {string} Last string in array.
@@ -73,6 +81,7 @@ export class JSOMacro {
 
   /**
    * @static
+   * @type {Macro}
    * @description Macro method Date().
    * @returns {Date} The date in UTC.
    */
@@ -82,13 +91,19 @@ export class JSOMacro {
 
   /**
    * @static
+   * @type {Macro}
    * @description Macro method Date().
    * @returns {string} ISO formatted date in UTC.
    */
   static ['DateString()'] (): string {
     return new Date().toISOString()
   }
+}
 
+/**
+ * @class
+ */
+export class JSOMacro extends Macro {
   static get RX (): RegExp {
     return /^{.+}$/
   }
@@ -108,6 +123,9 @@ export class JSOMacro {
    * @param {string|object} name - The string name of the macro or an object containing multiple macros.
    * @param {Function} [macro] - If a string name is provided, macro must be a Function.
    * @returns {JSOMacro} The JSOMacro class with the added macro or macros.
+   * @throws {Error} Conflicting macro name '\<NAME>'.
+   * @throws {Error} Bad macro name '\<NAME>'; must conform to regular expression '/^[A-Z][A-z0-9]+\(\)$/'.
+   * @throws {Error} Bad macro type in macro '\<NAME>'; type must be a function.
    */
   static addMacro (name: string | any, macro?: Function | any): JSOMacro {
     if (typeof name === 'string') {
@@ -121,7 +139,7 @@ export class JSOMacro {
     const keys = Object.keys(macro)
 
     for (let i = 0; i < keys.length; i += 1) {
-      if (Object.prototype.hasOwnProperty.call(this, keys[i]) as boolean) {
+      if (Object.prototype.hasOwnProperty.call(Macro, keys[i]) as boolean) {
         throw new Error(`Conflicting macro name '${keys[i]}'.`)
       }
 
@@ -141,7 +159,7 @@ export class JSOMacro {
    * @static
    * @description Method for looking up a macro by name.
    * @param {string} name - The name of the macro to get, or a macro string with arguments.
-   * @returns {Function} The macro function.
+   * @returns {function} The macro function.
    */
   static getMacro (name: string): Function {
     const macro = `${name.split(this.MacroNameRX)[0]}()`

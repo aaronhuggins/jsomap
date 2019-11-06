@@ -116,6 +116,18 @@ export class JSOMap {
               [`${key}`]: value[i]
             }, result[i])
           }
+        } else if (Array.isArray(result)) {
+          if (result.length > 0) {
+            for (let i = 0; i < result.length; i += 1) {
+              result[i] = Object.assign({
+                [`${key}`]: value
+              }, result[i])
+            }
+          } else {
+            result[0] = {
+              [`${key}`]: value
+            }
+          }
         } else {
           result[key] = value
         }
