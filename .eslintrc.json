@@ -3,6 +3,9 @@
     "standard-with-typescript",
     "standard-jsdoc"
   ],
+  "rules": {
+    "jsdoc/check-indentation": ["off"]
+  },
   "parserOptions": {
       "project": "./tsconfig.json"
   },

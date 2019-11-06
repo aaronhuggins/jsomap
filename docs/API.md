@@ -37,6 +37,10 @@
 | input | <code>any</code> | <p>Data to split.</p> |
 | queryStr | <code>string</code> | <p>Query string to evaluate.</p> |
 
+**Example**  
+```js
+Template:{ print: "{This is plain text | Split(/ /)}" }Expected:{ print: ['This', 'is', 'plain', 'text'] }
+```
 <a name="Macro.String_new"></a>
 
 ### Macro.String()(input) ⇒ <code>string</code>
@@ -49,6 +53,10 @@
 | --- | --- | --- |
 | input | <code>any</code> | <p>A value to convert to type 'string'.</p> |
 
+**Example**  
+```js
+Input:{ item: 12 }Template:{ print: "{[item] | String()}" }Expected:{ print: '12' }
+```
 <a name="Macro.Number_new"></a>
 
 ### Macro.Number()(input) ⇒ <code>number</code>
@@ -61,6 +69,10 @@
 | --- | --- | --- |
 | input | <code>any</code> | <p>A value to convert to type 'number'.</p> |
 
+**Example**  
+```js
+Input:{ item: '10' }Template:{ print: "{[item] | Number()}" }Expected:{ print: 10 }
+```
 <a name="Macro.Boolean_new"></a>
 
 ### Macro.Boolean()(input) ⇒ <code>boolean</code>
@@ -73,6 +85,10 @@
 | --- | --- | --- |
 | input | <code>any</code> | <p>A value to convert to type 'boolean'.</p> |
 
+**Example**  
+```js
+Template:{ print: "{false | Boolean()}" }Expected:{ print: false }
+```
 <a name="Macro.First_new"></a>
 
 ### Macro.First()(input) ⇒ <code>string</code>
@@ -85,6 +101,10 @@
 | --- | --- | --- |
 | input | <code>Array.&lt;string&gt;</code> | <p>Array of strings.</p> |
 
+**Example**  
+```js
+Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ print: "{[item] | First()}" }Expected:{ print: 'This' }
+```
 <a name="Macro.Last_new"></a>
 
 ### Macro.Last()(input) ⇒ <code>string</code>
@@ -97,13 +117,21 @@
 | --- | --- | --- |
 | input | <code>Array.&lt;string&gt;</code> | <p>Array of strings.</p> |
 
+**Example**  
+```js
+Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ print: "{[item] | Last()}" }Expected:{ print: 'text' }
+```
 <a name="Macro.Date_new"></a>
 
 ### Macro.Date()() ⇒ <code>Date</code>
 <p>Macro method Date().</p>
 
 **Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>Date</code> - <p>The date in UTC.</p>  
+**Returns**: <code>Date</code> - <p>The current date as javascript Date instance.</p>  
+**Example**  
+```js
+Template:{ print: "{Date()}" }Expected:{ print: new Date() }
+```
 <a name="Macro.DateString_new"></a>
 
 ### Macro.DateString()() ⇒ <code>string</code>
@@ -111,6 +139,10 @@
 
 **Kind**: static method of [<code>Macro</code>](#Macro)  
 **Returns**: <code>string</code> - <p>ISO formatted date in UTC.</p>  
+**Example**  
+```js
+Template:{ print: "{DateString()}" }Expected:{ print: '2018-01-06T22:22:22.022Z' }
+```
 <a name="JSOMacro"></a>
 
 ## JSOMacro
@@ -227,6 +259,14 @@ Macros must be added before parsing or querying; if not, the macros will not be 
 | name | <code>string</code> \| <code>object</code> | <p>The string name of the macro or an object containing multiple macros.</p> |
 | [macro] | <code>function</code> | <p>If a string name is provided, macro must be a Function.</p> |
 
+**Example**  
+```js
+JSOMap.addMacro('LowerCase()', (input) => input.toLowerCase())
+```
+**Example**  
+```js
+JSOMap.addMacro({  'LowerCase()': (input) => input.toLowerCase(),  'UpperCase()': (input) => input.toUpperCase()})
+```
 <a name="JSOMap.parse"></a>
 
 ### JSOMap.parse(input, map) ⇒ <code>any</code>

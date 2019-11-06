@@ -88,6 +88,13 @@ export class JSOMap {
    * Macros must be added before parsing or querying; if not, the macros will not be used.
    * @param {string|object} name - The string name of the macro or an object containing multiple macros.
    * @param {Function} [macro] - If a string name is provided, macro must be a Function.
+   * @example
+   * JSOMap.addMacro('LowerCase()', (input) => input.toLowerCase())
+   * @example
+   * JSOMap.addMacro({
+   *   'LowerCase()': (input) => input.toLowerCase(),
+   *   'UpperCase()': (input) => input.toUpperCase()
+   * })
    */
   static addMacro (name: string | any, macro?: Function): void {
     JSOMacro.addMacro(name, macro)

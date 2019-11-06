@@ -10,6 +10,11 @@ class Macro {
    * @param {any} input - Data to split.
    * @param {string} queryStr - Query string to evaluate.
    * @returns {string[]} Array of strings.
+   * @example
+   * Template:
+   * { print: "{This is plain text | Split(/ /)}" }
+   * Expected:
+   * { print: ['This', 'is', 'plain', 'text'] }
    */
   static ['Split()'] (input: any, queryStr: string): string[] {
     const rx = RegExp((/Split\(\/(.*)\/\)/).exec(queryStr)[1])
@@ -22,6 +27,13 @@ class Macro {
    * @description Macro method String().
    * @param {any} input - A value to convert to type 'string'.
    * @returns {string} The input as type 'string'.
+   * @example
+   * Input:
+   * { item: 12 }
+   * Template:
+   * { print: "{[item] | String()}" }
+   * Expected:
+   * { print: '12' }
    */
   static ['String()'] (input: any): string {
     return `${input}`
@@ -33,6 +45,13 @@ class Macro {
    * @description Macro method Number().
    * @param {any} input - A value to convert to type 'number'.
    * @returns {number} The input as type 'number'.
+   * @example
+   * Input:
+   * { item: '10' }
+   * Template:
+   * { print: "{[item] | Number()}" }
+   * Expected:
+   * { print: 10 }
    */
   static ['Number()'] (input: any): number {
     return parseFloat(input)
@@ -44,6 +63,11 @@ class Macro {
    * @description Macro method Boolean().
    * @param {any} input - A value to convert to type 'boolean'.
    * @returns {boolean} The input as type 'boolean'.
+   * @example
+   * Template:
+   * { print: "{false | Boolean()}" }
+   * Expected:
+   * { print: false }
    */
   static ['Boolean()'] (input: any): boolean {
     if (input.toLowerCase() === 'false') {
@@ -61,6 +85,13 @@ class Macro {
    * @description Macro method First().
    * @param {string[]} input - Array of strings.
    * @returns {string} First string in array.
+   * @example
+   * Input:
+   * { item: ['This', 'is', 'plain', 'text'] }
+   * Template:
+   * { print: "{[item] | First()}" }
+   * Expected:
+   * { print: 'This' }
    */
   static ['First()'] (input: any): string {
     return input[0]
@@ -72,6 +103,13 @@ class Macro {
    * @description Macro method Last().
    * @param {string[]} input - Array of strings.
    * @returns {string} Last string in array.
+   * @example
+   * Input:
+   * { item: ['This', 'is', 'plain', 'text'] }
+   * Template:
+   * { print: "{[item] | Last()}" }
+   * Expected:
+   * { print: 'text' }
    */
   static ['Last()'] (input: any): string {
     return input[input.length - 1] === ''
@@ -83,7 +121,12 @@ class Macro {
    * @static
    * @type {Macro}
    * @description Macro method Date().
-   * @returns {Date} The date in UTC.
+   * @returns {Date} The current date as javascript Date instance.
+   * @example
+   * Template:
+   * { print: "{Date()}" }
+   * Expected:
+   * { print: new Date() }
    */
   static ['Date()'] (): Date {
     return new Date()
@@ -94,6 +137,11 @@ class Macro {
    * @type {Macro}
    * @description Macro method Date().
    * @returns {string} ISO formatted date in UTC.
+   * @example
+   * Template:
+   * { print: "{DateString()}" }
+   * Expected:
+   * { print: '2018-01-06T22:22:22.022Z' }
    */
   static ['DateString()'] (): string {
     return new Date().toISOString()
@@ -159,7 +207,7 @@ export class JSOMacro extends Macro {
    * @static
    * @description Method for looking up a macro by name.
    * @param {string} name - The name of the macro to get, or a macro string with arguments.
-   * @returns {function} The macro function.
+   * @returns {Function} The macro function.
    */
   static getMacro (name: string): Function {
     const macro = `${name.split(this.MacroNameRX)[0]}()`
