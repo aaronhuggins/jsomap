@@ -1,6 +1,6 @@
 {
   "name": "jsomap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A JavaScript Object mapping and templating language.",
   "main": "index.js",
   "files": [
@@ -17,6 +17,10 @@
   "eslintIgnore": [
     "typings/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ahuggins-nhs/jsomap.git"
+  },
   "author": "Aaron Huggins",
   "license": "MIT",
   "devDependencies": {
