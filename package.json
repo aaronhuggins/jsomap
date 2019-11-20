@@ -1,6 +1,6 @@
 {
   "name": "jsomap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A JavaScript Object mapping and templating language.",
   "main": "index.js",
   "files": [
