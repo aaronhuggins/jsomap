@@ -1,148 +1,14 @@
 ## Classes
 
 <dl>
-<dt><a href="#Macro">Macro</a></dt>
-<dd></dd>
 <dt><a href="#JSOMacro">JSOMacro</a></dt>
 <dd></dd>
 <dt><a href="#JSOMap">JSOMap</a></dt>
 <dd></dd>
+<dt><a href="#Macro">Macro</a></dt>
+<dd></dd>
 </dl>
 
-<a name="Macro"></a>
-
-## Macro
-**Kind**: global class  
-
-* [Macro](#Macro)
-    * [.Split()(input, queryStr)](#Macro.Split_new) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.String()(input)](#Macro.String_new) ⇒ <code>string</code>
-    * [.Number()(input)](#Macro.Number_new) ⇒ <code>number</code>
-    * [.Boolean()(input)](#Macro.Boolean_new) ⇒ <code>boolean</code>
-    * [.First()(input)](#Macro.First_new) ⇒ <code>string</code>
-    * [.Last()(input)](#Macro.Last_new) ⇒ <code>string</code>
-    * [.Date()()](#Macro.Date_new) ⇒ <code>Date</code>
-    * [.DateString()()](#Macro.DateString_new) ⇒ <code>string</code>
-
-<a name="Macro.Split_new"></a>
-
-### Macro.Split()(input, queryStr) ⇒ <code>Array.&lt;string&gt;</code>
-<p>Macro method Split().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>Array.&lt;string&gt;</code> - <p>Array of strings.</p>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| input | <code>any</code> | <p>Data to split.</p> |
-| queryStr | <code>string</code> | <p>Query string to evaluate.</p> |
-
-**Example**  
-```js
-Template:{ "print": "{This is plain text | Split(/ /)}" }Expected:{ print: ['This', 'is', 'plain', 'text'] }
-```
-<a name="Macro.String_new"></a>
-
-### Macro.String()(input) ⇒ <code>string</code>
-<p>Macro method String().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>string</code> - <p>The input as type 'string'.</p>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| input | <code>any</code> | <p>A value to convert to type 'string'.</p> |
-
-**Example**  
-```js
-Input:{ item: 12 }Template:{ "print": "{[item] | String()}" }Expected:{ print: '12' }
-```
-<a name="Macro.Number_new"></a>
-
-### Macro.Number()(input) ⇒ <code>number</code>
-<p>Macro method Number().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>number</code> - <p>The input as type 'number'.</p>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| input | <code>any</code> | <p>A value to convert to type 'number'.</p> |
-
-**Example**  
-```js
-Input:{ item: '10' }Template:{ "print": "{[item] | Number()}" }Expected:{ print: 10 }
-```
-<a name="Macro.Boolean_new"></a>
-
-### Macro.Boolean()(input) ⇒ <code>boolean</code>
-<p>Macro method Boolean().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>boolean</code> - <p>The input as type 'boolean'.</p>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| input | <code>any</code> | <p>A value to convert to type 'boolean'.</p> |
-
-**Example**  
-```js
-Template:{ "print": "{false | Boolean()}" }Expected:{ print: false }
-```
-<a name="Macro.First_new"></a>
-
-### Macro.First()(input) ⇒ <code>string</code>
-<p>Macro method First().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>string</code> - <p>First string in array.</p>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| input | <code>Array.&lt;string&gt;</code> | <p>Array of strings.</p> |
-
-**Example**  
-```js
-Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ "print": "{[item] | First()}" }Expected:{ print: 'This' }
-```
-<a name="Macro.Last_new"></a>
-
-### Macro.Last()(input) ⇒ <code>string</code>
-<p>Macro method Last().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>string</code> - <p>Last string in array.</p>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| input | <code>Array.&lt;string&gt;</code> | <p>Array of strings.</p> |
-
-**Example**  
-```js
-Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ "print": "{[item] | Last()}" }Expected:{ print: 'text' }
-```
-<a name="Macro.Date_new"></a>
-
-### Macro.Date()() ⇒ <code>Date</code>
-<p>Macro method Date().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>Date</code> - <p>The current date as javascript Date instance.</p>  
-**Example**  
-```js
-Template:{ "print": "{Date()}" }Expected:{ print: new Date() }
-```
-<a name="Macro.DateString_new"></a>
-
-### Macro.DateString()() ⇒ <code>string</code>
-<p>Macro method Date().</p>
-
-**Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>string</code> - <p>ISO formatted date in UTC.</p>  
-**Example**  
-```js
-Template:{ "print": "{DateString()}" }Expected:{ print: '2018-01-06T22:22:22.022Z' }
-```
 <a name="JSOMacro"></a>
 
 ## JSOMacro
@@ -280,3 +146,171 @@ JSOMap.addMacro({  'LowerCase()': (input) => input.toLowerCase(),  'UpperCase(
 | input | <code>object</code> | <p>An object to map data from.</p> |
 | map | <code>object</code> | <p>An object of queries to transform input.</p> |
 
+<a name="Macro"></a>
+
+## Macro
+**Kind**: global class  
+
+* [Macro](#Macro)
+    * [.Split()(input, queryStr)](#Macro.Split_new) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.String()(input)](#Macro.String_new) ⇒ <code>string</code>
+    * [.Number()(input)](#Macro.Number_new) ⇒ <code>number</code>
+    * [.Boolean()(input)](#Macro.Boolean_new) ⇒ <code>boolean</code>
+    * [.First()(input)](#Macro.First_new) ⇒ <code>string</code>
+    * [.Last()(input)](#Macro.Last_new) ⇒ <code>string</code>
+    * [.Date()()](#Macro.Date_new) ⇒ <code>Date</code>
+    * [.DateString()()](#Macro.DateString_new) ⇒ <code>string</code>
+    * [.JsonString()(input)](#Macro.JsonString_new) ⇒ <code>string</code>
+    * [.JsonParse()(input)](#Macro.JsonParse_new) ⇒ <code>any</code>
+
+<a name="Macro.Split_new"></a>
+
+### Macro.Split()(input, queryStr) ⇒ <code>Array.&lt;string&gt;</code>
+<p>Macro method Split().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>Array.&lt;string&gt;</code> - <p>Array of strings.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>any</code> | <p>Data to split.</p> |
+| queryStr | <code>string</code> | <p>Query string to evaluate.</p> |
+
+**Example**  
+```js
+Template:{ "print": "{This is plain text | Split(/ /)}" }Expected:{ print: ['This', 'is', 'plain', 'text'] }
+```
+<a name="Macro.String_new"></a>
+
+### Macro.String()(input) ⇒ <code>string</code>
+<p>Macro method String().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>string</code> - <p>The input as type 'string'.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>any</code> | <p>A value to convert to type 'string'.</p> |
+
+**Example**  
+```js
+Input:{ item: 12 }Template:{ "print": "{[item] | String()}" }Expected:{ print: '12' }
+```
+<a name="Macro.Number_new"></a>
+
+### Macro.Number()(input) ⇒ <code>number</code>
+<p>Macro method Number().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>number</code> - <p>The input as type 'number'.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>any</code> | <p>A value to convert to type 'number'.</p> |
+
+**Example**  
+```js
+Input:{ item: '10' }Template:{ "print": "{[item] | Number()}" }Expected:{ print: 10 }
+```
+<a name="Macro.Boolean_new"></a>
+
+### Macro.Boolean()(input) ⇒ <code>boolean</code>
+<p>Macro method Boolean().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>boolean</code> - <p>The input as type 'boolean'.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>any</code> | <p>A value to convert to type 'boolean'.</p> |
+
+**Example**  
+```js
+Template:{ "print": "{false | Boolean()}" }Expected:{ print: false }
+```
+<a name="Macro.First_new"></a>
+
+### Macro.First()(input) ⇒ <code>string</code>
+<p>Macro method First().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>string</code> - <p>First string in array.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>Array.&lt;string&gt;</code> | <p>Array of strings.</p> |
+
+**Example**  
+```js
+Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ "print": "{[item] | First()}" }Expected:{ print: 'This' }
+```
+<a name="Macro.Last_new"></a>
+
+### Macro.Last()(input) ⇒ <code>string</code>
+<p>Macro method Last().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>string</code> - <p>Last string in array.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>Array.&lt;string&gt;</code> | <p>Array of strings.</p> |
+
+**Example**  
+```js
+Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ "print": "{[item] | Last()}" }Expected:{ print: 'text' }
+```
+<a name="Macro.Date_new"></a>
+
+### Macro.Date()() ⇒ <code>Date</code>
+<p>Macro method Date().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>Date</code> - <p>The current date as javascript Date instance.</p>  
+**Example**  
+```js
+Template:{ "print": "{Date()}" }Expected:{ print: new Date() }
+```
+<a name="Macro.DateString_new"></a>
+
+### Macro.DateString()() ⇒ <code>string</code>
+<p>Macro method Date().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>string</code> - <p>ISO formatted date in UTC.</p>  
+**Example**  
+```js
+Template:{ "print": "{DateString()}" }Expected:{ print: '2018-01-06T22:22:22.022Z' }
+```
+<a name="Macro.JsonString_new"></a>
+
+### Macro.JsonString()(input) ⇒ <code>string</code>
+<p>Macro method JsonString().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>string</code> - <p>The javascript value as a JSON string.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>any</code> | <p>Any Javascript value.</p> |
+
+**Example**  
+```js
+Input:{ item: ['This', 'is', 'plain', 'text'] }Template:{ "print": "{[item] | JsonString()}" }Expected:{ print: '["This","is","plain","text"]' }
+```
+<a name="Macro.JsonParse_new"></a>
+
+### Macro.JsonParse()(input) ⇒ <code>any</code>
+<p>Macro method JsonParse().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>any</code> - <p>The JSON string as a javascript value.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>string</code> | <p>Any JSON string.</p> |
+
+**Example**  
+```js
+Input:{ item: '["This","is","plain","text"]' }Template:{ "print": "{[item] | JsonParse()}" }Expected:{ print: ['This', 'is', 'plain', 'text'] }
+```

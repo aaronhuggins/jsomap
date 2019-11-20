@@ -1,5 +1,8 @@
 import { JSOMacro } from './JSOMacro'
 
+/**
+ * @class
+ */
 export class JSOMap {
   /**
    * @description Class for safely querying javascript objects, parsing a map object to produce a transformed object.

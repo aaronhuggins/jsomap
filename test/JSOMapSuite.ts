@@ -14,7 +14,8 @@ describe('JSOMap', () => {
       nested: {
         item: 1
       }
-    }
+    },
+    json: '[1,2]'
   }
 
   it('should map object query type string', () => {
@@ -130,5 +131,13 @@ describe('JSOMap', () => {
     printObj = { print: '{DateString()}' }
 
     assert.strictEqual(typeof (new JSOMap(testObj, printObj).mapped().print), 'string')
+
+    printObj = { print: '{[array] | JsonString()}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, '[1,2]')
+
+    printObj = { print: '{[json] | JsonParse()}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print[0], testObj.array[0])
   })
 })

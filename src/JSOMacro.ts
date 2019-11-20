@@ -1,23 +1,11 @@
 /* eslint "@typescript-eslint/no-extraneous-class": ["error", { "allowStaticOnly": true }] */
 
-import { Macro } from './Macro'
+import * as internal from './Macro'
 
 /**
  * @class
  */
-export class JSOMacro extends Macro {
-  static get RX (): RegExp {
-    return /^{.+}$/
-  }
-
-  static get MacroDefRX (): RegExp {
-    return /^[A-Z][A-z0-9]+\(\)$/
-  }
-
-  static get MacroNameRX (): RegExp {
-    return /\(/
-  }
-
+export class JSOMacro extends internal.Macro {
   /**
    * @static
    * @description Method for dynamically adding macros to class JSOMacro.
@@ -41,7 +29,7 @@ export class JSOMacro extends Macro {
     const keys = Object.keys(macro)
 
     for (let i = 0; i < keys.length; i += 1) {
-      if (Object.prototype.hasOwnProperty.call(Macro, keys[i]) as boolean) {
+      if (Object.prototype.hasOwnProperty.call(internal.Macro, keys[i]) as boolean) {
         throw new Error(`Conflicting macro name '${keys[i]}'.`)
       }
 
@@ -84,5 +72,17 @@ export class JSOMacro extends Macro {
     } else {
       return macroStr
     }
+  }
+
+  static get RX (): RegExp {
+    return /^{.+}$/
+  }
+
+  static get MacroDefRX (): RegExp {
+    return /^[A-Z][A-z0-9]+\(\)$/
+  }
+
+  static get MacroNameRX (): RegExp {
+    return /\(/
   }
 }
