@@ -39,11 +39,11 @@ export class JSOMap {
       if (Array.isArray(pipe)) {
         pipe.forEach(function handlePipe (qry) {
           if (queryRx.test(qry)) {
-            result = this.query(input, qry)
+            result = JSOMap.query(input, qry)
           } else if (JSOMacro.MacroDefRX.test(`${qry.split(JSOMacro.MacroNameRX)[0]}()`)) {
-            result = this.query(result, `{${qry}}`)
+            result = JSOMap.query(result, `{${qry}}`)
           } else {
-            result = this.query(result, qry)
+            result = JSOMap.query(result, qry)
           }
         })
 
@@ -116,9 +116,9 @@ export class JSOMap {
 
     Object.keys(map).forEach(function handleMapKey (key) {
       if (Array.isArray(map) || typeof map[key] === 'object') {
-        result[key] = this.parse(input, map[key])
+        result[key] = JSOMap.parse(input, map[key])
       } else {
-        const value = this.query(input, map[key])
+        const value = JSOMap.query(input, map[key])
 
         if (Array.isArray(result) && Array.isArray(value)) {
           for (let i = 0; i < value.length; i += 1) {
