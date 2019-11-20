@@ -37,7 +37,7 @@ export class JSOMap {
 
       // Pipe macro results one to the next.
       if (Array.isArray(pipe)) {
-        pipe.forEach((qry) => {
+        pipe.forEach(function handlePipe (qry) {
           if (queryRx.test(qry)) {
             result = this.query(input, qry)
           } else if (JSOMacro.MacroDefRX.test(`${qry.split(JSOMacro.MacroNameRX)[0]}()`)) {
@@ -56,7 +56,7 @@ export class JSOMap {
     } else if (queryRx.test(queryStr)) {
       const qPath = queryStr.split(queryRx)
 
-      qPath.forEach((part: any) => {
+      qPath.forEach(function handleQueryPart (part: any) {
         if (part !== '') {
           const numericRx = /[0-9]+/
           if (numericRx.test(part)) {
@@ -114,7 +114,7 @@ export class JSOMap {
     const result: any = Array.isArray(map) ? [] : {}
     map = Array.isArray(map) ? map[0] : map
 
-    Object.keys(map).forEach((key) => {
+    Object.keys(map).forEach(function handleMapKey (key) {
       if (Array.isArray(map) || typeof map[key] === 'object') {
         result[key] = this.parse(input, map[key])
       } else {
