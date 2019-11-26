@@ -162,7 +162,7 @@ JSOMap.addMacro({  'LowerCase()': (input) => input.toLowerCase(),  'UpperCase(
     * [.DateString()()](#Macro.DateString_new) ⇒ <code>string</code>
     * [.JsonString()(input)](#Macro.JsonString_new) ⇒ <code>string</code>
     * [.JsonParse()(input)](#Macro.JsonParse_new) ⇒ <code>any</code>
-    * [.Math()(input, queryStr)](#Macro.Math_new) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.Math()(input, queryStr)](#Macro.Math_new) ⇒ <code>number</code>
 
 <a name="Macro.Split_new"></a>
 
@@ -317,11 +317,11 @@ Input:{ item: '["This","is","plain","text"]' }Template:{ "print": "{[item] | 
 ```
 <a name="Macro.Math_new"></a>
 
-### Macro.Math()(input, queryStr) ⇒ <code>Array.&lt;string&gt;</code>
+### Macro.Math()(input, queryStr) ⇒ <code>number</code>
 <p>Macro method Math().</p>
 
 **Kind**: static method of [<code>Macro</code>](#Macro)  
-**Returns**: <code>Array.&lt;string&gt;</code> - <p>Array of strings.</p>  
+**Returns**: <code>number</code> - <p>The result of the math expression.</p>  
 
 | Param | Type | Description |
 | --- | --- | --- |

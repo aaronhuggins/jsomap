@@ -191,7 +191,7 @@ export class Macro {
    * @description Macro method Math().
    * @param {any} input - Data to query against.
    * @param {string} queryStr - Query string to evaluate and perform mathematical operations.
-   * @returns {string[]} Array of strings.
+   * @returns {number} The result of the math expression.
    * @example
    * Input:
    * { item1: 2, item2: 5 }
