@@ -147,5 +147,21 @@ describe('JSOMap', () => {
     printObj = { print: '{Math([array][0] + [array][1])}' }
 
     assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, 3)
+
+    printObj = { print: '{If([text], "Hello world!", true)}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, true)
+
+    printObj = { print: '{If([text], "1", true, false)}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, false)
+
+    printObj = { print: '{If([array][0], 1, true)}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, true)
+
+    printObj = { print: '{Concat("I say, ", [text])}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, 'I say, Hello world!')
   })
 })

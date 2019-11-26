@@ -233,4 +233,77 @@ export class Macro {
 
     return bigeval.exec(resolvedExpr) as number
   }
+
+  /**
+   * @static
+   * @description Macro method If().
+   * @param {any} input - Data to query against.
+   * @param {string} queryStr - Query string to evaluate and perform operation.
+   * @returns {any} The result of the expression.
+   * @example
+   * Input:
+   * { item1: 2 }
+   * Template:
+   * { "print": "{If([item1], 3, true, false)}" }
+   * Expected:
+   * { print: false }
+   */
+  static ['If()'] (input: any, queryStr: string): any {
+    let result
+    let args: any = (/If\((.*)\)/).exec(queryStr)[1]
+    args = args.split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
+      .map((arg: any) => {
+        if ((/^["']/).test(arg.trim())) {
+          arg = arg.substring(1, arg.length - 1)
+        } else if (arg.trim() === ',') {
+          arg = ''
+        } else if (arg.trim() === 'true') {
+          arg = true
+        } else if (arg.trim() === 'false') {
+          arg = false
+        } else if ((/^[0-9.]+$/).test(arg.trim())) {
+          arg = parseFloat(arg)
+        } else {
+          arg = internal.JSOMap.query(input, arg.trim())
+        }
+
+        return arg
+      })
+      .filter((arg: any) => arg !== '')
+
+    if (args[0] === args[1]) {
+      result = args[2]
+    } else {
+      result = args[3]
+    }
+
+    return result
+  }
+
+  /**
+   * @static
+   * @description Macro method Concat().
+   * @param {any} input - Data to query against.
+   * @param {string} queryStr - Query string to evaluate and perform concatenation.
+   * @returns {string} The result of the expression.
+   * @example
+   * Input:
+   * { item1: 'one' }
+   * Template:
+   * { "print": "{Concat('There can be only ', [item1], '.')}" }
+   * Expected:
+   * { print: 'There can be only one.' }
+   */
+  static ['Concat()'] (input: any, queryStr: string): string {
+    const args = (/Concat\((.*)\)/).exec(queryStr)[1]
+
+    return args.split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
+      .map((item) => {
+        return (/^["']/).test(item.trim())
+          ? item.substring(1, item.length - 1)
+          : item.trim() === ','
+            ? ''
+            : internal.JSOMap.query(input, item.trim())
+      }).join('')
+  }
 }

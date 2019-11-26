@@ -163,6 +163,8 @@ JSOMap.addMacro({  'LowerCase()': (input) => input.toLowerCase(),  'UpperCase(
     * [.JsonString()(input)](#Macro.JsonString_new) ⇒ <code>string</code>
     * [.JsonParse()(input)](#Macro.JsonParse_new) ⇒ <code>any</code>
     * [.Math()(input, queryStr)](#Macro.Math_new) ⇒ <code>number</code>
+    * [.If()(input, queryStr)](#Macro.If_new) ⇒ <code>any</code>
+    * [.Concat()(input, queryStr)](#Macro.Concat_new) ⇒ <code>string</code>
 
 <a name="Macro.Split_new"></a>
 
@@ -331,4 +333,38 @@ Input:{ item: '["This","is","plain","text"]' }Template:{ "print": "{[item] | 
 **Example**  
 ```js
 Input:{ item1: 2, item2: 5 }Template:{ "print": "{Math([item1] * [item2])}" }Expected:{ print: 10 }
+```
+<a name="Macro.If_new"></a>
+
+### Macro.If()(input, queryStr) ⇒ <code>any</code>
+<p>Macro method If().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>any</code> - <p>The result of the expression.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>any</code> | <p>Data to query against.</p> |
+| queryStr | <code>string</code> | <p>Query string to evaluate and perform operation.</p> |
+
+**Example**  
+```js
+Input:{ item1: 2 }Template:{ "print": "{If([item1], 3, true, false)}" }Expected:{ print: false }
+```
+<a name="Macro.Concat_new"></a>
+
+### Macro.Concat()(input, queryStr) ⇒ <code>string</code>
+<p>Macro method Concat().</p>
+
+**Kind**: static method of [<code>Macro</code>](#Macro)  
+**Returns**: <code>string</code> - <p>The result of the expression.</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>any</code> | <p>Data to query against.</p> |
+| queryStr | <code>string</code> | <p>Query string to evaluate and perform concatenation.</p> |
+
+**Example**  
+```js
+Input:{ item1: 'one' }Template:{ "print": "{Concat('There can be only ', [item1], '.')}" }Expected:{ print: 'There can be only one.' }
 ```
