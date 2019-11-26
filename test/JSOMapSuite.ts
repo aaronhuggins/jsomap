@@ -139,5 +139,13 @@ describe('JSOMap', () => {
     printObj = { print: '{[json] | JsonParse()}' }
 
     assert.strictEqual(new JSOMap(testObj, printObj).mapped().print[0], testObj.array[0])
+
+    printObj = { print: '{Math(2 * 3)}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, 6)
+
+    printObj = { print: '{Math([array][0] + [array][1])}' }
+
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, 3)
   })
 })

@@ -1,5 +1,8 @@
 /* eslint "@typescript-eslint/no-extraneous-class": ["error", { "allowStaticOnly": true }] */
 
+const BigEval = require('bigeval')
+import * as internal from './JSOMap'
+
 /**
  * @class
  */
@@ -181,5 +184,51 @@ export class Macro {
    */
   static ['JsonParse()'] (input: any): string {
     return JSON.parse(input)
+  }
+
+  /**
+   * @static
+   * @description Macro method Math().
+   * @param {any} input - Data to query against.
+   * @param {string} queryStr - Query string to evaluate and perform mathematical operations.
+   * @returns {string[]} Array of strings.
+   * @example
+   * Input:
+   * { item1: 2, item2: 5 }
+   * Template:
+   * { "print": "{Math([item1] * [item2])}" }
+   * Expected:
+   * { print: 10 }
+   */
+  static ['Math()'] (input: any, queryStr: string): number {
+    let queryCache: any = ''
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    const resolvedExpr = (queryStr.match(/([*/+-])|(\[[A-Za-z0-9_\- ]+\])|([0-9]+)/g) || ['0'])
+      .reduce((concat: any, value: any, idx: number, arr: any[]) => {
+        if (concat.substring(0, 1) === '[') {
+          queryCache += concat
+          concat = ''
+        }
+
+        if (value.substring(0, 1) === '[') {
+          queryCache += value
+
+          if (arr.length === idx + 1) {
+            concat += internal.JSOMap.query(input, queryCache).toString()
+          }
+        } else {
+          if (queryCache === '') {
+            concat += value
+          } else {
+            concat += internal.JSOMap.query(input, queryCache).toString() + value
+            queryCache = ''
+          }
+        }
+
+        return concat
+      })
+    const bigeval = new BigEval()
+
+    return bigeval.exec(resolvedExpr) as number
   }
 }

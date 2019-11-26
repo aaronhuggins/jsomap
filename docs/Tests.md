@@ -124,5 +124,9 @@ printObj = { print: '{[array] | JsonString()}' };
 assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, '[1,2]');
 printObj = { print: '{[json] | JsonParse()}' };
 assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print[0], testObj.array[0]);
+printObj = { print: '{Math(2 * 3)}' };
+assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 6);
+printObj = { print: '{Math([array][0] + [array][1])}' };
+assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 3);
 ```
 

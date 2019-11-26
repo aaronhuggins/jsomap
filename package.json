@@ -1,6 +1,6 @@
 {
   "name": "jsomap",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A JavaScript Object mapping and templating language.",
   "main": "index.js",
   "files": [
@@ -33,6 +33,7 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.11.2",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "bigeval": "^3.1.0",
     "codecov": "^3.6.1",
     "del-cli": "^3.0.0",
     "dts-bundle-webpack": "^1.0.2",
@@ -59,5 +60,8 @@
     "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
+  },
+  "peerDependencies": {
+    "bigeval": "^3.1.0"
   }
 }
