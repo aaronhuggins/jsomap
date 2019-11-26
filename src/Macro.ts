@@ -1,7 +1,8 @@
 /* eslint "@typescript-eslint/no-extraneous-class": ["error", { "allowStaticOnly": true }] */
+/* eslint-disable @typescript-eslint/no-var-requires */
 
-const BigEval = require('bigeval')
 import * as internal from './JSOMap'
+const BigEval = require('bigeval')
 
 /**
  * @class
@@ -220,6 +221,7 @@ export class Macro {
           if (queryCache === '') {
             concat += value
           } else {
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             concat += internal.JSOMap.query(input, queryCache).toString() + value
             queryCache = ''
           }

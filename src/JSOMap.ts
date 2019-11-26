@@ -38,14 +38,18 @@ export class JSOMap {
       // Pipe macro results one to the next.
       if (Array.isArray(pipe)) {
         pipe.forEach(function handlePipe (qry, idx) {
-          if (queryRx.test(qry)) {
+          if (JSOMacro.MacroDefRX.test(`${qry.split(JSOMacro.MacroNameRX)[0]}()`)) {
+            result = idx === 0
+              ? JSOMap.query(input, `{${qry}}`)
+              : JSOMap.query(result, `{${qry}}`)
+          } else if (queryRx.test(qry)) {
             result = idx === 0
               ? JSOMap.query(input, qry)
               : JSOMap.query(result, qry)
-          } else if (JSOMacro.MacroDefRX.test(`${qry.split(JSOMacro.MacroNameRX)[0]}()`)) {
-            result = JSOMap.query(result, `{${qry}}`)
           } else {
-            result = JSOMap.query(result, qry)
+            result = idx === 0
+              ? JSOMap.query(input, qry)
+              : JSOMap.query(result, qry)
           }
         })
 
