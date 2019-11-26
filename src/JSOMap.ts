@@ -66,7 +66,11 @@ export class JSOMap {
         if (part !== '') {
           const numericRx = /[0-9]+/
           if (numericRx.test(part)) {
-            part = parseFloat(part)
+            const numberPart = parseFloat(part)
+
+            part = isNaN(numberPart)
+              ? part
+              : numberPart
           }
 
           if (result === '') {
