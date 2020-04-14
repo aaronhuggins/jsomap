@@ -261,6 +261,10 @@ export class Macro {
           arg = true
         } else if (arg.trim() === 'false') {
           arg = false
+        } else if (arg.trim() === 'null') {
+          arg = null
+        } else if (arg.trim() === 'undefined') {
+          arg = undefined
         } else if ((/^[0-9.]+$/).test(arg.trim())) {
           arg = parseFloat(arg)
         } else {
