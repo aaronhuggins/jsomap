@@ -17,6 +17,35 @@ describe('JSOMap', () => {
     },
     json: '[1,2]'
   }
+  const testObj2 = {
+    line_items: [
+      {
+        id: 935970,
+        title: 'Sunny Fire Pit Cover',
+        quantity: 1,
+        sku: 'SUNNY-FP-COVER',
+        price: '21.63'
+      },
+      {
+        id: 968738,
+        title: 'Sunny Fire Pit',
+        quantity: 1,
+        sku: 'SUNNY-FP',
+        price: '155.00'
+      }
+    ]
+  }
+  const testmap = {
+    orderItems: [
+      {
+        siteOrderItemId: '{[line_items][id] | String()}',
+        sku: '[line_items][sku]',
+        title: '[line_items][title]',
+        quantity: '[line_items][quantity]',
+        unitPrice: '{[line_items][price] | Number()}'
+      }
+    ]
+  }
 
   it('should map object query type string', () => {
     const printObj = { print: '[text]' }
@@ -163,5 +192,23 @@ describe('JSOMap', () => {
     printObj = { print: '{Concat("I say, ", [text])}' }
 
     assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, 'I say, Hello world!')
+  })
+
+  it('should map object with array to result with array', () => {
+    const result = new JSOMap(testObj2, testmap).mapped()
+
+    assert.strictEqual(Array.isArray(result.orderItems), true)
+
+    const orderItems: any[] = result.orderItems
+
+    orderItems.forEach((obj, index) => {
+      const original = testObj2.line_items[index]
+
+      assert.strictEqual(obj.siteOrderItemId, original.id.toString())
+      assert.strictEqual(obj.sku, original.sku)
+      assert.strictEqual(obj.title, original.title)
+      assert.strictEqual(obj.quantity, original.quantity)
+      assert.strictEqual(obj.unitPrice, parseFloat(original.price))
+    })
   })
 })

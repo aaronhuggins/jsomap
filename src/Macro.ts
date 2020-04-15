@@ -22,7 +22,7 @@ export class Macro {
    */
   static ['Split()'] (input: any, queryStr: string): string[] {
     const rx = RegExp((/Split\(\/(.*)\/\)/).exec(queryStr)[1])
-    return input.split(rx)
+    return Array.isArray(input) ? input.map((val) => Macro['Split()'](val, queryStr)) : input.split(rx)
   }
 
   /**
@@ -39,8 +39,8 @@ export class Macro {
    * Expected:
    * { print: '12' }
    */
-  static ['String()'] (input: any): string {
-    return `${input}`
+  static ['String()'] (input: any): string | string[] {
+    return Array.isArray(input) ? input.map((val) => Macro['String()'](val) as string) : `${input}`
   }
 
   /**
@@ -57,8 +57,8 @@ export class Macro {
    * Expected:
    * { print: 10 }
    */
-  static ['Number()'] (input: any): number {
-    return parseFloat(input)
+  static ['Number()'] (input: any): number | number[] {
+    return Array.isArray(input) ? input.map((val) => Macro['Number()'](val) as number) : parseFloat(input)
   }
 
   /**
@@ -73,13 +73,13 @@ export class Macro {
    * Expected:
    * { print: false }
    */
-  static ['Boolean()'] (input: any): boolean {
+  static ['Boolean()'] (input: any): boolean | boolean[] {
     if (input.toLowerCase() === 'false') {
       return false
     } else if (input.toLowerCase() === 'true') {
       return true
     } else {
-      return input
+      return Array.isArray(input) ? input.map((val) => Macro['Boolean()'](val) as boolean) : input
     }
   }
 
@@ -183,8 +183,8 @@ export class Macro {
    * Expected:
    * { print: ['This', 'is', 'plain', 'text'] }
    */
-  static ['JsonParse()'] (input: any): string {
-    return JSON.parse(input)
+  static ['JsonParse()'] (input: any): string | string[] {
+    return Array.isArray(input) ? input.map((val) => Macro['JsonParse()'](val) as string) : JSON.parse(input)
   }
 
   /**
@@ -201,7 +201,8 @@ export class Macro {
    * Expected:
    * { print: 10 }
    */
-  static ['Math()'] (input: any, queryStr: string): number {
+  static ['Math()'] (input: any, queryStr: string): number | number[] {
+    if (Array.isArray(input)) return input.map((val) => Macro['Math()'](val, queryStr) as number)
     let queryCache: any = ''
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const resolvedExpr = (queryStr.match(/([*/+-])|(\[[A-Za-z0-9_\- ]+\])|([0-9]+)/g) || ['0'])
@@ -248,7 +249,8 @@ export class Macro {
    * Expected:
    * { print: false }
    */
-  static ['If()'] (input: any, queryStr: string): any {
+  static ['If()'] (input: any, queryStr: string): any | any[] {
+    if (Array.isArray(input)) return input.map((val) => Macro['If()'](val, queryStr))
     let result
     let args: any = (/If\((.*)\)/).exec(queryStr)[1]
     args = args.split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
@@ -298,7 +300,8 @@ export class Macro {
    * Expected:
    * { print: 'There can be only one.' }
    */
-  static ['Concat()'] (input: any, queryStr: string): string {
+  static ['Concat()'] (input: any, queryStr: string): string | string[] {
+    if (Array.isArray(input)) return input.map((val) => Macro['Concat()'](val, queryStr) as string)
     const args = (/Concat\((.*)\)/).exec(queryStr)[1]
 
     return args.split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
