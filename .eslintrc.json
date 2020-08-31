@@ -4,10 +4,12 @@
     "standard-jsdoc"
   ],
   "rules": {
-    "jsdoc/check-indentation": ["off"]
+    "jsdoc/check-indentation": ["off"],
+    "@typescript-eslint/no-var-requires": ["off"],
+    "@typescript-eslint/strict-boolean-expressions": ["off"]
   },
   "parserOptions": {
-      "project": "./tsconfig.json"
+      "project": "./tsconfig.lint.json"
   },
   "globals": {
       "mocha": "readonly"

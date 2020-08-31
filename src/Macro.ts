@@ -40,7 +40,7 @@ export class Macro {
    * { print: '12' }
    */
   static ['String()'] (input: any): string | string[] {
-    return Array.isArray(input) ? input.map((val) => Macro['String()'](val) as string) : `${input}`
+    return Array.isArray(input) ? input.map((val) => Macro['String()'](val) as string) : `${input as string}`
   }
 
   /**
@@ -203,10 +203,10 @@ export class Macro {
    */
   static ['Math()'] (input: any, queryStr: string): number | number[] {
     if (Array.isArray(input)) return input.map((val) => Macro['Math()'](val, queryStr) as number)
-    let queryCache: any = ''
+    let queryCache: string = ''
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const resolvedExpr = (queryStr.match(/([*/+-])|(\[[A-Za-z0-9_\- ]+\])|([0-9]+)/g) || ['0'])
-      .reduce((concat: any, value: any, idx: number, arr: any[]) => {
+      .reduce((concat: string, value: string, idx: number, arr: any[]) => {
         if (concat.substring(0, 1) === '[') {
           queryCache += concat
           concat = ''
@@ -216,7 +216,7 @@ export class Macro {
           queryCache += value
 
           if (arr.length === idx + 1) {
-            concat += internal.JSOMap.query(input, queryCache).toString()
+            concat += internal.JSOMap.query(input, queryCache).toString() as string
           }
         } else {
           if (queryCache === '') {

@@ -34,7 +34,7 @@ export class JSOMacro extends internal.Macro {
       }
 
       if (!this.MacroDefRX.test(keys[i])) {
-        throw new Error(`Bad macro name '${keys[i]}'; must conform to regular expression '${this.MacroDefRX}'.`)
+        throw new Error(`Bad macro name '${keys[i]}'; must conform to regular expression '${this.MacroDefRX.source}'.`)
       }
 
       if (!(macro[keys[i]] instanceof Function)) {
@@ -67,7 +67,7 @@ export class JSOMacro extends internal.Macro {
   static pipeMacro (macroStr: string): string[] | string {
     const pipeRx = / \| /
 
-    if (pipeRx.test(macroStr)) {
+    if (String.prototype.includes.call(macroStr || '', ' | ')) {
       return macroStr.split(pipeRx)
     } else {
       return macroStr

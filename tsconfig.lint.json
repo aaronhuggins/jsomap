@@ -24,7 +24,6 @@
   "exclude": [
     "typings",
     "node_modules",
-    "dist",
-    "gulpfile.ts"
+    "dist"
   ]
 }

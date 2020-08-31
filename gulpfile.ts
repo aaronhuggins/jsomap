@@ -1,10 +1,10 @@
-const fs = require('fs')
-const gulp = require('gulp')
-const shell = require('gulp-shell')
-const zip = require('gulp-zip')
-const pkg = require('./package.json')
+import * as fs from 'fs'
+import * as gulp from 'gulp'
+import * as shell from 'gulp-shell'
+import * as zip from 'gulp-zip'
+import * as pkg from './package.json'
 
-gulp.task('mkdir', async (done) => {
+gulp.task('mkdir', async (done: Function) => {
   if (!fs.existsSync('coverage')) {
     fs.mkdirSync('coverage')
   }
@@ -38,14 +38,14 @@ gulp.task('release:js', shell.task([
   'npm pack'
 ]))
 
-gulp.task('release:ts', async (done) => {
+gulp.task('release:ts', async (done: Function) => {
   gulp.src([
     'src/**',
     'core.ts',
     'LICENSE',
     'README.md',
     'package.json'
-  ], { base : '.' })
+  ], { base: '.' })
     .pipe(zip(`${pkg.name}-${pkg.version}-ts.zip`))
     .pipe(gulp.dest('./'))
 
@@ -78,7 +78,7 @@ gulp.task('eslint:fix', shell.task([
 ]))
 
 gulp.task('eslint:xunit', shell.task([
-  'eslint --format junit --ext .ts . > ./coverage/eslint.xml',
+  'eslint --format junit --ext .ts . > ./coverage/eslint.xml'
 ], {
   ignoreErrors: true
 }))
@@ -87,7 +87,7 @@ gulp.task('codecov', shell.task([
   'codecov -t 710da1b2-17ab-40d3-86e3-d8cbce8b8ce3'
 ]))
 
-gulp.task('test', gulp.parallel(
+gulp.task('test', gulp.series(
   gulp.series(
     'mkdir',
     'eslint:xunit'
@@ -95,7 +95,7 @@ gulp.task('test', gulp.parallel(
   'mocha:xunit'
 ))
 
-gulp.task('test:local', gulp.parallel(
+gulp.task('test:local', gulp.series(
   'eslint',
   'mocha:coverage'
 ))
