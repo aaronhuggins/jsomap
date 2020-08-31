@@ -1,17 +1,14 @@
 {
-  "extends": [
-    "standard-with-typescript",
-    "standard-jsdoc"
-  ],
+  "extends": ["standard-with-typescript", "standard-jsdoc"],
   "rules": {
     "jsdoc/check-indentation": ["off"],
     "@typescript-eslint/no-var-requires": ["off"],
     "@typescript-eslint/strict-boolean-expressions": ["off"]
   },
   "parserOptions": {
-      "project": "./tsconfig.lint.json"
+    "project": "./tsconfig.lint.json"
   },
   "globals": {
-      "mocha": "readonly"
+    "mocha": "readonly"
   }
 }

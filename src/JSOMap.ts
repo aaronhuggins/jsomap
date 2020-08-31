@@ -38,27 +38,28 @@ export class JSOMap {
       // Pipe macro results one to the next.
       if (Array.isArray(pipe)) {
         pipe.forEach(function handlePipe (qry, idx) {
-          if (JSOMacro.MacroDefRX.test(`${qry.split(JSOMacro.MacroNameRX)[0]}()`)) {
-            result = idx === 0
-              ? JSOMap.query(input, `{${qry}}`)
-              : JSOMap.query(result, `{${qry}}`)
+          if (
+            JSOMacro.MacroDefRX.test(`${qry.split(JSOMacro.MacroNameRX)[0]}()`)
+          ) {
+            result =
+              idx === 0
+                ? JSOMap.query(input, `{${qry}}`)
+                : JSOMap.query(result, `{${qry}}`)
           } else if (queryRx.test(qry)) {
-            result = idx === 0
-              ? JSOMap.query(input, qry)
-              : JSOMap.query(result, qry)
+            result =
+              idx === 0 ? JSOMap.query(input, qry) : JSOMap.query(result, qry)
           } else {
-            result = idx === 0
-              ? JSOMap.query(input, qry)
-              : JSOMap.query(result, qry)
+            result =
+              idx === 0 ? JSOMap.query(input, qry) : JSOMap.query(result, qry)
           }
         })
 
-      // Otherwise, resolve individual macros.
+        // Otherwise, resolve individual macros.
       } else {
         result = JSOMacro.getMacro(macro)(input, queryStr)
       }
 
-    // If it is a plain query to select data from the input object.
+      // If it is a plain query to select data from the input object.
     } else if (queryRx.test(queryStr)) {
       const qPath = queryStr.split(queryRx)
 
@@ -68,9 +69,7 @@ export class JSOMap {
           if (numericRx.test(part)) {
             const numberPart = parseFloat(part)
 
-            part = isNaN(numberPart)
-              ? part
-              : numberPart
+            part = isNaN(numberPart) ? part : numberPart
           }
 
           if (result === '') {
@@ -79,7 +78,7 @@ export class JSOMap {
             if (typeof part === 'number') {
               result = result[part]
             } else {
-              result = result.map((res) => res[part])
+              result = result.map(res => res[part])
             }
           } else {
             result = result[part]
@@ -87,7 +86,7 @@ export class JSOMap {
         }
       })
 
-    // Anything not matching the macro or query syntax.
+      // Anything not matching the macro or query syntax.
     } else {
       result = queryStr
     }
@@ -132,16 +131,22 @@ export class JSOMap {
 
         if (Array.isArray(result) && Array.isArray(value)) {
           for (let i = 0; i < value.length; i += 1) {
-            result[i] = Object.assign({
-              [`${key}`]: value[i]
-            }, result[i])
+            result[i] = Object.assign(
+              {
+                [`${key}`]: value[i]
+              },
+              result[i]
+            )
           }
         } else if (Array.isArray(result)) {
           if (result.length > 0) {
             for (let i = 0; i < result.length; i += 1) {
-              result[i] = Object.assign({
-                [`${key}`]: value
-              }, result[i])
+              result[i] = Object.assign(
+                {
+                  [`${key}`]: value
+                },
+                result[i]
+              )
             }
           } else {
             result[0] = {

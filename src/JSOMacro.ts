@@ -29,16 +29,22 @@ export class JSOMacro extends internal.Macro {
     const keys = Object.keys(macro)
 
     for (let i = 0; i < keys.length; i += 1) {
-      if (Object.prototype.hasOwnProperty.call(internal.Macro, keys[i]) as boolean) {
+      if (
+        Object.prototype.hasOwnProperty.call(internal.Macro, keys[i]) as boolean
+      ) {
         throw new Error(`Conflicting macro name '${keys[i]}'.`)
       }
 
       if (!this.MacroDefRX.test(keys[i])) {
-        throw new Error(`Bad macro name '${keys[i]}'; must conform to regular expression '${this.MacroDefRX.source}'.`)
+        throw new Error(
+          `Bad macro name '${keys[i]}'; must conform to regular expression '${this.MacroDefRX.source}'.`
+        )
       }
 
       if (!(macro[keys[i]] instanceof Function)) {
-        throw new Error(`Bad macro type in macro '${keys[i]}'; type must be a function.`)
+        throw new Error(
+          `Bad macro type in macro '${keys[i]}'; type must be a function.`
+        )
       }
     }
 
@@ -54,9 +60,7 @@ export class JSOMacro extends internal.Macro {
   static getMacro (name: string): Function {
     const macro = `${name.split(this.MacroNameRX)[0]}()`
 
-    return this[macro] === undefined
-      ? () => macro
-      : this[macro]
+    return this[macro] === undefined ? () => macro : this[macro]
   }
 
   /**

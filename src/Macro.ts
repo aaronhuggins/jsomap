@@ -21,8 +21,10 @@ export class Macro {
    * { print: ['This', 'is', 'plain', 'text'] }
    */
   static ['Split()'] (input: any, queryStr: string): string[] {
-    const rx = RegExp((/Split\(\/(.*)\/\)/).exec(queryStr)[1])
-    return Array.isArray(input) ? input.map((val) => Macro['Split()'](val, queryStr)) : input.split(rx)
+    const rx = RegExp(/Split\(\/(.*)\/\)/.exec(queryStr)[1])
+    return Array.isArray(input)
+      ? input.map(val => Macro['Split()'](val, queryStr))
+      : input.split(rx)
   }
 
   /**
@@ -40,7 +42,9 @@ export class Macro {
    * { print: '12' }
    */
   static ['String()'] (input: any): string | string[] {
-    return Array.isArray(input) ? input.map((val) => Macro['String()'](val) as string) : `${input as string}`
+    return Array.isArray(input)
+      ? input.map(val => Macro['String()'](val) as string)
+      : `${input as string}`
   }
 
   /**
@@ -58,7 +62,9 @@ export class Macro {
    * { print: 10 }
    */
   static ['Number()'] (input: any): number | number[] {
-    return Array.isArray(input) ? input.map((val) => Macro['Number()'](val) as number) : parseFloat(input)
+    return Array.isArray(input)
+      ? input.map(val => Macro['Number()'](val) as number)
+      : parseFloat(input)
   }
 
   /**
@@ -79,7 +85,9 @@ export class Macro {
     } else if (input.toLowerCase() === 'true') {
       return true
     } else {
-      return Array.isArray(input) ? input.map((val) => Macro['Boolean()'](val) as boolean) : input
+      return Array.isArray(input)
+        ? input.map(val => Macro['Boolean()'](val) as boolean)
+        : input
     }
   }
 
@@ -184,7 +192,9 @@ export class Macro {
    * { print: ['This', 'is', 'plain', 'text'] }
    */
   static ['JsonParse()'] (input: any): string | string[] {
-    return Array.isArray(input) ? input.map((val) => Macro['JsonParse()'](val) as string) : JSON.parse(input)
+    return Array.isArray(input)
+      ? input.map(val => Macro['JsonParse()'](val) as string)
+      : JSON.parse(input)
   }
 
   /**
@@ -202,34 +212,39 @@ export class Macro {
    * { print: 10 }
    */
   static ['Math()'] (input: any, queryStr: string): number | number[] {
-    if (Array.isArray(input)) return input.map((val) => Macro['Math()'](val, queryStr) as number)
+    if (Array.isArray(input))
+      return input.map(val => Macro['Math()'](val, queryStr) as number)
     let queryCache: string = ''
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    const resolvedExpr = (queryStr.match(/([*/+-])|(\[[A-Za-z0-9_\- ]+\])|([0-9]+)/g) || ['0'])
-      .reduce((concat: string, value: string, idx: number, arr: any[]) => {
-        if (concat.substring(0, 1) === '[') {
-          queryCache += concat
-          concat = ''
+    const resolvedExpr = (
+      queryStr.match(/([*/+-])|(\[[A-Za-z0-9_\- ]+\])|([0-9]+)/g) || ['0']
+    ).reduce((concat: string, value: string, idx: number, arr: any[]) => {
+      if (concat.substring(0, 1) === '[') {
+        queryCache += concat
+        concat = ''
+      }
+
+      if (value.substring(0, 1) === '[') {
+        queryCache += value
+
+        if (arr.length === idx + 1) {
+          concat += internal.JSOMap.query(
+            input,
+            queryCache
+          ).toString() as string
         }
-
-        if (value.substring(0, 1) === '[') {
-          queryCache += value
-
-          if (arr.length === idx + 1) {
-            concat += internal.JSOMap.query(input, queryCache).toString() as string
-          }
+      } else {
+        if (queryCache === '') {
+          concat += value
         } else {
-          if (queryCache === '') {
-            concat += value
-          } else {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            concat += internal.JSOMap.query(input, queryCache).toString() + value
-            queryCache = ''
-          }
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          concat += internal.JSOMap.query(input, queryCache).toString() + value
+          queryCache = ''
         }
+      }
 
-        return concat
-      })
+      return concat
+    })
     const bigeval = new BigEval()
 
     return bigeval.exec(resolvedExpr) as number
@@ -250,12 +265,14 @@ export class Macro {
    * { print: false }
    */
   static ['If()'] (input: any, queryStr: string): any | any[] {
-    if (Array.isArray(input)) return input.map((val) => Macro['If()'](val, queryStr))
+    if (Array.isArray(input))
+      return input.map(val => Macro['If()'](val, queryStr))
     let result
-    let args: any = (/If\((.*)\)/).exec(queryStr)[1]
-    args = args.split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
+    let args: any = /If\((.*)\)/.exec(queryStr)[1]
+    args = args
+      .split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
       .map((arg: any) => {
-        if ((/^["']/).test(arg.trim())) {
+        if (/^["']/.test(arg.trim())) {
           arg = arg.substring(1, arg.length - 1)
         } else if (arg.trim() === ',') {
           arg = ''
@@ -267,7 +284,7 @@ export class Macro {
           arg = null
         } else if (arg.trim() === 'undefined') {
           arg = undefined
-        } else if ((/^[0-9.]+$/).test(arg.trim())) {
+        } else if (/^[0-9.]+$/.test(arg.trim())) {
           arg = parseFloat(arg)
         } else {
           arg = internal.JSOMap.query(input, arg.trim())
@@ -301,16 +318,19 @@ export class Macro {
    * { print: 'There can be only one.' }
    */
   static ['Concat()'] (input: any, queryStr: string): string | string[] {
-    if (Array.isArray(input)) return input.map((val) => Macro['Concat()'](val, queryStr) as string)
-    const args = (/Concat\((.*)\)/).exec(queryStr)[1]
+    if (Array.isArray(input))
+      return input.map(val => Macro['Concat()'](val, queryStr) as string)
+    const args = /Concat\((.*)\)/.exec(queryStr)[1]
 
-    return args.split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
-      .map((item) => {
-        return (/^["']/).test(item.trim())
+    return args
+      .split(/(["'].*?["']|[^\s"',]+)(?=\s*,|\s*$)/g)
+      .map(item => {
+        return /^["']/.test(item.trim())
           ? item.substring(1, item.length - 1)
           : item.trim() === ','
-            ? ''
-            : internal.JSOMap.query(input, item.trim())
-      }).join('')
+          ? ''
+          : internal.JSOMap.query(input, item.trim())
+      })
+      .join('')
   }
 }

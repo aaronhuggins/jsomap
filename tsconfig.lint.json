@@ -10,20 +10,9 @@
     "experimentalDecorators": true,
     "outDir": "dist",
     "declaration": true,
-    "typeRoots": [
-      "typings",
-      "node_modules/@types"
-    ],
-    "types": [
-      "mocha",
-      "node",
-      "bigeval"
-    ]
+    "typeRoots": ["typings", "node_modules/@types"],
+    "types": ["mocha", "node", "bigeval"]
   },
 
-  "exclude": [
-    "typings",
-    "node_modules",
-    "dist"
-  ]
+  "exclude": ["typings", "node_modules", "dist"]
 }
