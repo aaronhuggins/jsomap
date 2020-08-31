@@ -11,50 +11,35 @@ should map object query type string.
 
 ```js
 const printObj = { print: '[text]' }
-assert.deepStrictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  testObj.text
-)
+assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, testObj.text)
 ```
 
 should map object query type array.
 
 ```js
 const printObj = { print: '[array]' }
-assert.deepStrictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  testObj.array
-)
+assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, testObj.array)
 ```
 
 should map object query type object[].
 
 ```js
 const printObj = { print: [{ item: '[objects][item]' }] }
-assert.deepStrictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  testObj.objects
-)
+assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, testObj.objects)
 ```
 
 should map object query nested object.
 
 ```js
 const printObj = { print: '[obj][nested][item]' }
-assert.deepStrictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  testObj.obj.nested.item
-)
+assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, testObj.obj.nested.item)
 ```
 
 should pass plain value back from map.
 
 ```js
 const printObj = { print: 'unchanged' }
-assert.deepStrictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  printObj.print
-)
+assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, printObj.print)
 ```
 
 should return object from parsing map.
@@ -62,27 +47,16 @@ should return object from parsing map.
 ```js
 const printObj = { print: 'unchanged' }
 assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).mapped(), printObj)
-assert.deepStrictEqual(
-  new core_1.JSOMap(testObj, printObj).toObject(),
-  printObj
-)
+assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).toObject(), printObj)
 assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj).valueOf(), printObj)
-assert.deepStrictEqual(
-  new core_1.JSOMap(testObj, printObj)[
-    Symbol.for('nodejs.util.inspect.custom')
-  ](),
-  printObj
-)
+assert.deepStrictEqual(new core_1.JSOMap(testObj, printObj)[Symbol.for('nodejs.util.inspect.custom')](), printObj)
 ```
 
 should map object macro.
 
 ```js
 const printObj = { print: '{Date()}' }
-assert.strictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print instanceof Date,
-  true
-)
+assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print instanceof Date, true)
 ```
 
 should map an added object macro.
@@ -123,10 +97,7 @@ should pass a non-existent macro name back.
 
 ```js
 const printObj = { print: '{Nope()}' }
-assert.strictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  'Nope()'
-)
+assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 'Nope()')
 ```
 
 should map object pipe macro.
@@ -144,24 +115,15 @@ assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 1)
 printObj = { print: '{true | Boolean() | not | Boolean() | false | Boolean()}' }
 assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, false)
 printObj = { print: '{Test string | Split(/ (.+)/) | Last()}' }
-assert.strictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  'string'
-)
+assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 'string')
 printObj = { print: '{[array] | Last()}' }
 assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 2)
 printObj = { print: '{DateString()}' }
-assert.strictEqual(
-  typeof new core_1.JSOMap(testObj, printObj).mapped().print,
-  'string'
-)
+assert.strictEqual(typeof new core_1.JSOMap(testObj, printObj).mapped().print, 'string')
 printObj = { print: '{[array] | JsonString()}' }
 assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, '[1,2]')
 printObj = { print: '{[json] | JsonParse()}' }
-assert.strictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print[0],
-  testObj.array[0]
-)
+assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print[0], testObj.array[0])
 printObj = { print: '{Math(2 * 3)}' }
 assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 6)
 printObj = { print: '{Math([array][0] + [array][1])}' }
@@ -173,8 +135,5 @@ assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, false)
 printObj = { print: '{If([array][0], 1, true)}' }
 assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, true)
 printObj = { print: '{Concat("I say, ", [text])}' }
-assert.strictEqual(
-  new core_1.JSOMap(testObj, printObj).mapped().print,
-  'I say, Hello world!'
-)
+assert.strictEqual(new core_1.JSOMap(testObj, printObj).mapped().print, 'I say, Hello world!')
 ```

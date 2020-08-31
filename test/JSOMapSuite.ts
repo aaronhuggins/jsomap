@@ -2,91 +2,76 @@ import 'mocha'
 import * as assert from 'assert'
 import { JSOMap } from '../core'
 
-describe('JSOMap', () => {
-  const testObj = {
-    text: 'Hello world!',
-    array: [1, 2],
-    objects: [{ item: 1 }, { item: 2 }],
-    obj: {
-      nested: {
-        item: 1
-      }
+const testObj = {
+  text: 'Hello world!',
+  array: [1, 2],
+  objects: [{ item: 1 }, { item: 2 }],
+  obj: {
+    nested: {
+      item: 1
+    }
+  },
+  json: '[1,2]'
+}
+const testObj2 = {
+  line_items: [
+    {
+      id: 935970,
+      title: 'Sunny Fire Pit Cover',
+      quantity: 1,
+      sku: 'SUNNY-FP-COVER',
+      price: '21.63'
     },
-    json: '[1,2]'
-  }
-  const testObj2 = {
-    line_items: [
-      {
-        id: 935970,
-        title: 'Sunny Fire Pit Cover',
-        quantity: 1,
-        sku: 'SUNNY-FP-COVER',
-        price: '21.63'
-      },
-      {
-        id: 968738,
-        title: 'Sunny Fire Pit',
-        quantity: 1,
-        sku: 'SUNNY-FP',
-        price: '155.00'
-      }
-    ]
-  }
-  const testmap = {
-    orderItems: [
-      {
-        siteOrderItemId: '{[line_items][id] | String()}',
-        sku: '[line_items][sku]',
-        title: '[line_items][title]',
-        quantity: '[line_items][quantity]',
-        unitPrice: '{[line_items][price] | Number()}'
-      }
-    ]
-  }
+    {
+      id: 968738,
+      title: 'Sunny Fire Pit',
+      quantity: 1,
+      sku: 'SUNNY-FP',
+      price: '155.00'
+    }
+  ]
+}
+const testmap = {
+  orderItems: [
+    {
+      siteOrderItemId: '{[line_items][id] | String()}',
+      sku: '[line_items][sku]',
+      title: '[line_items][title]',
+      quantity: '[line_items][quantity]',
+      unitPrice: '{[line_items][price] | Number()}'
+    }
+  ]
+}
 
+describe('JSOMap', () => {
   it('should map object query type string', () => {
     const printObj = { print: '[text]' }
 
-    assert.deepStrictEqual(
-      new JSOMap(testObj, printObj).mapped().print,
-      testObj.text
-    )
+    assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped().print, testObj.text)
   })
 
   it('should map object query type array', () => {
     const printObj = { print: '[array]' }
 
-    assert.deepStrictEqual(
-      new JSOMap(testObj, printObj).mapped().print,
-      testObj.array
-    )
+    assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped().print, testObj.array)
   })
 
   it('should map object query type object[]', () => {
     const printObj = { print: [{ item: '[objects][item]' }] }
 
-    assert.deepStrictEqual(
-      new JSOMap(testObj, printObj).mapped().print,
-      testObj.objects
-    )
+    assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped().print, testObj.objects)
   })
 
   it('should map object query nested object', () => {
     const printObj = { print: '[obj][nested][item]' }
 
-    assert.deepStrictEqual(
-      new JSOMap(testObj, printObj).mapped().print,
-      testObj.obj.nested.item
-    )
+    assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped().print, testObj.obj.nested.item)
   })
 
   it('should pass plain value back from map', () => {
     const printObj = { print: 'unchanged' }
 
-    assert.deepStrictEqual(
-      new JSOMap(testObj, printObj).mapped().print,
-      printObj.print
-    )
+    assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped().print, printObj.print)
   })
 
   it('should return object from parsing map', () => {
@@ -95,19 +80,13 @@ describe('JSOMap', () => {
     assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped(), printObj)
     assert.deepStrictEqual(new JSOMap(testObj, printObj).toObject(), printObj)
     assert.deepStrictEqual(new JSOMap(testObj, printObj).valueOf(), printObj)
-    assert.deepStrictEqual(
-      new JSOMap(testObj, printObj)[Symbol.for('nodejs.util.inspect.custom')](),
-      printObj
-    )
+    assert.deepStrictEqual(new JSOMap(testObj, printObj)[Symbol.for('nodejs.util.inspect.custom')](), printObj)
   })
 
   it('should map object macro', () => {
     const printObj = { print: '{Date()}' }
 
-    assert.strictEqual(
-      new JSOMap(testObj, printObj).mapped().print instanceof Date,
-      true
-    )
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print instanceof Date, true)
   })
 
   it('should map an added object macro', () => {
@@ -179,10 +158,7 @@ describe('JSOMap', () => {
 
     printObj = { print: '{DateString()}' }
 
-    assert.strictEqual(
-      typeof new JSOMap(testObj, printObj).mapped().print,
-      'string'
-    )
+    assert.strictEqual(typeof new JSOMap(testObj, printObj).mapped().print, 'string')
 
     printObj = { print: '{[array] | JsonString()}' }
 
@@ -190,10 +166,7 @@ describe('JSOMap', () => {
 
     printObj = { print: '{[json] | JsonParse()}' }
 
-    assert.strictEqual(
-      new JSOMap(testObj, printObj).mapped().print[0],
-      testObj.array[0]
-    )
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print[0], testObj.array[0])
 
     printObj = { print: '{Math(2 * 3)}' }
 
@@ -217,10 +190,7 @@ describe('JSOMap', () => {
 
     printObj = { print: '{Concat("I say, ", [text])}' }
 
-    assert.strictEqual(
-      new JSOMap(testObj, printObj).mapped().print,
-      'I say, Hello world!'
-    )
+    assert.strictEqual(new JSOMap(testObj, printObj).mapped().print, 'I say, Hello world!')
   })
 
   it('should map object with array to result with array', () => {

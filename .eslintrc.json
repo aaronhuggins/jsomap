@@ -3,7 +3,8 @@
   "rules": {
     "jsdoc/check-indentation": ["off"],
     "@typescript-eslint/no-var-requires": ["off"],
-    "@typescript-eslint/strict-boolean-expressions": ["off"]
+    "@typescript-eslint/strict-boolean-expressions": ["off"],
+    "@typescript-eslint/indent": ["off"]
   },
   "parserOptions": {
     "project": "./tsconfig.lint.json"
