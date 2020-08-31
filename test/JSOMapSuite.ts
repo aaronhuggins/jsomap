@@ -6,6 +6,7 @@ const testObj = {
   text: 'Hello world!',
   array: [1, 2],
   objects: [{ item: 1 }, { item: 2 }],
+  unexpected: [] as any,
   obj: {
     nested: {
       item: 1
@@ -60,6 +61,12 @@ describe('JSOMap', () => {
     const printObj = { print: [{ item: '[objects][item]' }] }
 
     assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped().print, testObj.objects)
+  })
+
+  it('should map object query type to empty string if undefined', () => {
+    const printObj = { print: '[unexpected][0][item][prop]' }
+
+    assert.deepStrictEqual(new JSOMap(testObj, printObj).mapped().print, '')
   })
 
   it('should map object query nested object', () => {

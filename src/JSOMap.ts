@@ -56,8 +56,9 @@ export class JSOMap {
     } else if (queryRx.test(queryStr)) {
       const qPath = queryStr.split(queryRx)
 
-      qPath.forEach(function handleQueryPart (part: any) {
-        if (part !== '') {
+      qPath
+        .filter(part => part !== '')
+        .forEach(function handleQueryPart (part: any, index: number) {
           const numericRx = /[0-9]+/
           if (numericRx.test(part)) {
             const numberPart = parseFloat(part)
@@ -65,19 +66,22 @@ export class JSOMap {
             part = isNaN(numberPart) ? part : numberPart
           }
 
-          if (result === '') {
+          if (result === '' && index === 0) {
             result = input[part]
           } else if (Array.isArray(result)) {
             if (typeof part === 'number') {
               result = result[part]
+
+              if (result === undefined) result = ''
             } else {
               result = result.map(res => res[part])
             }
           } else {
             result = result[part]
+
+            if (result === undefined) result = ''
           }
-        }
-      })
+        })
 
       // Anything not matching the macro or query syntax.
     } else {
