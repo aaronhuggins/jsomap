@@ -2,6 +2,7 @@
   "extends": "@istanbuljs/nyc-config-typescript",
   "all": true,
   "include": ["core.ts", "src/**"],
+  "require": ["ts-node/register", "source-map-support/register"],
   "check-coverage": false,
   "reporter": "lcov"
 }
